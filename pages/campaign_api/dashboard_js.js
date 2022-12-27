@@ -4,15 +4,15 @@ $(document).ready(() => {
   // ? TODO Fetching data stays iun browser cache, and for the same data it is downloaded again and again
   // ? TODO: Add a button to clear the cache
   // // TODO: Make this a class of buttons, so that the same function can be called with different parameters
-  // ? Date from JQueryUI handles only dates, not time. So the time is always 00:00:00
-  // ! Bootstrap table accepts only Arrays as input, not JSON objects
-
   // // TODO Add button for deletion of messages in message table
   // // TODO button for creating new campaigns from message_list table
+  // ? Date from JQueryUI handles only dates, not time. So the time is always 00:00:00
+  // ! Bootstrap table accepts only Arrays as input, not JSON objects
   // TODO button for visualizing the campaign from campaign_list table
-  const $dashboard_header = $("#dashboard_header").text(
-    "JS_bootto_strappo_dashboardo is working!",
-  );
+  // TODO Move the results to different functions for clear distinction
+  // TODO Remove get users button
+  // TODO tabs for different objects
+  // TODO rm bg from tables, create outline for groups of objects
   const $dashboard_text = $("#dashboard_text");
   const $button_message_list = $("#button_msg_list");
   const $button_user_list = $("#button_user_list");
@@ -243,7 +243,6 @@ $(document).ready(() => {
     };
 
     fetch(`${python_api_url}_create_capmaign`, requestOptions)
-      // fetch(`${root_div}_create_capmaign`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         console.log(result);

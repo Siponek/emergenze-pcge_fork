@@ -145,11 +145,11 @@
                 </div>
             </div>
         </div>
-        <div class="container" id="API_results_container">
+        <div class="container border" id="API_results_container">
             <h1 id="results_header">Results</h1>
         </div>
         <!-- Data table for messages -->
-        <div class="container bg-success" id="bstr_message" style="display: none;">
+        <div class="container" id="bstr_message" style="display: none;">
             <h3 id="msg_list_header">Messages</h3>
             <div id="msg_toolbar">
                 <button id="button_delete" class="btn btn-danger">
