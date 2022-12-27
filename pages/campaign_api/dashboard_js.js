@@ -546,7 +546,7 @@ $(document).ready(() => {
   ) {
     $dashboard_text.text(`Visualizing ${campaign_id} campaign info!`);
     const $bstr_campaign = $("#bstr_camp_vis");
-    const campaign_table = $("#camp_table");
+    const $campaign_table = $("#camp_table");
     const request_options = {
       method: "GET",
       redirect: "follow",
@@ -571,7 +571,107 @@ $(document).ready(() => {
             campaign_identifier: campaign_json.Identificativo,
           },
         ];
-        fill_bootstrap_table(campaign_list_dict, campaign_table);
+        $campaign_table.bootstrapTable("destroy").bootstrapTable({
+          columns: [
+            {
+              field: "state",
+              checkbox: true,
+              // Not used because the header columns are 1 not 2
+              // rowspan: 2,
+              align: "center",
+              valign: "middle",
+            },
+            {
+              field: "campaign_id",
+              title: "Campaign ID",
+              align: "center",
+              valign: "middle",
+            },
+            {
+              field: "campaign_telephone",
+              title: "Campaign telephone",
+              align: "center",
+              valign: "middle",
+              sortable: true,
+            },
+            {
+              field: "campaign_note",
+              title: "Campaign note",
+              align: "center",
+            },
+            {
+              field: "campaign_type",
+              title: "Campaign type",
+              align: "center",
+              valign: "middle",
+              sortable: true,
+            },
+            {
+              field: "campaign_duration",
+              title: "Campaign duration",
+              align: "center",
+              valign: "middle",
+              sortable: true,
+            },
+            {
+              field: "campaign_start_date",
+              title: "Campaign start date",
+              align: "center",
+              valign: "middle",
+              sortable: true,
+            },
+            {
+              field: "campaign_end_date",
+              title: "Campaign end date",
+              align: "center",
+              valign: "middle",
+              sortable: true,
+            },
+            {
+              field: "campaign_status",
+              title: "Campaign status",
+              align: "center",
+              valign: "middle",
+              sortable: true,
+            },
+            {
+              field: "campaign_identifier",
+              title: "Campaign identifier",
+              align: "center",
+              valign: "middle",
+              sortable: true,
+            },
+            {
+              field: "campaign_contacts_num",
+              title: "Campaign contacts amount",
+              align: "center",
+              valign: "middle",
+              sortable: true,
+            },
+          ],
+          data: campaign_list_dict,
+          uniqueId: "campaign_id",
+          striped: true,
+          sortable: true,
+          pageNumber: 1,
+          pageSize: 10,
+          pageList: [10, 25, 50, 100],
+          searchHighlight: true,
+          pagination: true,
+          search: true,
+          showToggle: true,
+          showExport: true,
+          exportDataType: "all",
+          exportTypes: [
+            "csv",
+            "txt",
+            "sql",
+            "doc",
+            "excel",
+            "xlsx",
+            "pdf",
+          ],
+        });
       })
       .catch((error) => console.log("error", error));
   }
