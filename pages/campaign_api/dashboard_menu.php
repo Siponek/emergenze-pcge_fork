@@ -68,30 +68,88 @@
 
             <!-- Tab panes -->
             <div class="tab-content">
-                <div role="tabpanel" class="tab-pane active" id="user_tab">
+                <div role="tabpanel" class="tab-pane fade in active" id="user_tab">
                     <h1 id="dashboard_header">Users Dashboard</h1>
                     <div class="container " id="bstr_user" style="display: none;">
+                        <h3 id="user_list_header">Users list</h3>
+                        <!-- Data table for users -->
                         <table class="table-hover" id="user_table_1">
-                            <thead>
-                                <h3 id="user_list_header">Users list</h3>
-                                <tr>
-                                    <th data-field="user_id">User id</th>
-                                    <th data-field="user_surname">Surname</th>
-                                    <th data-field="user_name">Name</th>
-                                    <th data-field="user_group">Group</th>
-                                </tr>
-                            </thead>
                         </table>
+                        </tr>
                     </div>
                     <hr class="hr" />
                 </div>
-                <div role="tabpanel" class="tab-pane" id="camp_tab">
+                <div role="tabpanel" class="tab-pane fade" id="msg_tab">
+                    <h1 id="dashboard_header">Messages visualization Dashboard</h1>
+                    <div class="container" id="API_bttn_msg_container">
+                        <button class="btn btn-primary" id="button_msg_list" type="button">Get message list </button>
+                        </button>
+                        <hr class="hr" />
+                        <form>
+                            <div class="form-group">
+                                <label for="comment">Message:</label>
+                                <textarea class="form-control" rows="5" id="msg_content"
+                                    placeholder="Message content"></textarea>
+                                <input type="text" class="form-control" id="msg_note" placeholder="Message note ">
+                                <input type="text" class="form-control" id="msg_id"
+                                    placeholder="ID of pre-made message ">
+                            </div>
+                        </form>
+                        <div class="card">
+                            <label>
+                                <input type="radio" class="option-input radio" value=1 name="group_option"
+                                    id="radio_grp_1" />
+                                Group 1
+                            </label>
+                            <label>
+                                <input type="radio" class="option-input radio" value=2 name="group_option"
+                                    id="radio_grp_2" checked />
+                                Group 2
+                            </label>
+
+                        </div>
+                        <!-- Buttons voice -->
+                        <div class="btn-group">
+
+                            <div class="btn-group" data-toggle="buttons">
+                                <button class="btn btn-primary" type="submit" name="voice_options"
+                                    id="voice_picker_female" value="F">
+                                    Female
+                                    voice
+                                </button>
+                            </div>
+
+                            <div class="btn-group" data-toggle="buttons">
+                                <button class="btn btn-primary" type="submit" name="voice_options"
+                                    id="voice_picker_male" value="M">
+                                    Male
+                                    voice</button>
+                            </div>
+                        </div>
+                        <div class="btn-group">
+                            <div class="btn-group" data-toggle="buttons">
+                                <button class="btn btn-success" type="submit" id="button_send_message">Create a
+                                    message</button>
+                            </div>
+                            <!-- <div class="col-2 text-left" role="group"> -->
+                            <div class="btn-group" data-toggle="buttons">
+                                <button class="btn btn-warning" type="submit" id="button_create_campaign"
+                                    data-toggle="tooltip" data-placement="bottom"
+                                    title="Create campaign with the message contents specified">Create and
+                                    start a
+                                    campaign</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="camp_tab">
                     <h1 id="dashboard_header">Campaigns Dashboard</h1>
                     <div class="container" id="API_bttn_camp_container">
                         <input type="text" class="form-control" id="camp_id" placeholder="ID of campaign to visualize ">
                         <button class="btn btn-primary" id="button_vis_campaign" type="button">Visualise campaign
                         </button>
                         <hr class="hr" />
+
                     </div>
                     <div class="container" id="API_date_container">
                         <div class="md-form md-outline input-with-post-icon input-group date datepicker"
@@ -115,73 +173,11 @@
                         <hr class="hr" />
                     </div>
                 </div>
-                <div role="tabpanel" class="tab-pane" id="msg_tab">
-                    <h1 id="dashboard_header">Messages Dashboard</h1>
-                    <div class="container" id="API_bttn_msg_container">
-                        <button class="btn btn-primary" id="button_msg_list" type="button">Get message list </button>
-                        </button>
-                        <div class="container" id="API_message_container">
-                            <hr class="hr" />
-                            <form>
-                                <div class="form-group">
-                                    <label for="comment">Message:</label>
-                                    <textarea class="form-control" rows="5" id="msg_content"
-                                        placeholder="Message content"></textarea>
-                                    <input type="text" class="form-control" id="msg_note" placeholder="Message note ">
-                                    <input type="text" class="form-control" id="msg_id"
-                                        placeholder="ID of pre-made message ">
-                                </div>
-                            </form>
-                            <div class="card">
-                                <label>
-                                    <input type="radio" class="option-input radio" value=1 name="group_option"
-                                        id="radio_grp_1" />
-                                    Group 1
-                                </label>
-                                <label>
-                                    <input type="radio" class="option-input radio" value=2 name="group_option"
-                                        id="radio_grp_2" checked />
-                                    Group 2
-                                </label>
-
-                            </div>
-                            <!-- Buttons voice -->
-                            <div class="btn-group">
-
-                                <div class="btn-group" data-toggle="buttons">
-                                    <button class="btn btn-primary" type="submit" name="voice_options"
-                                        id="voice_picker_female" value="F">
-                                        Female
-                                        voice
-                                    </button>
-                                </div>
-
-                                <div class="btn-group" data-toggle="buttons">
-                                    <button class="btn btn-primary" type="submit" name="voice_options"
-                                        id="voice_picker_male" value="M">
-                                        Male
-                                        voice</button>
-                                </div>
-
-                                <div class="btn-group" data-toggle="buttons">
-                                    <button class="btn btn-success" type="submit" id="button_send_message">Create a
-                                        message</button>
-                                </div>
-                                <!-- <div class="col-2 text-left" role="group"> -->
-                                <div class="btn-group" data-toggle="buttons">
-                                    <button class="btn btn-warning" type="submit" id="button_create_campaign">Create and
-                                        start a
-                                        campaign</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
 
-
-        <div class="container border" id="API_results_container">
+        <!-- Add an outline for container -->
+        <div class="container" id="API_results_container">
             <h1 id="results_header">Results</h1>
         </div>
         <!-- Data table for messages -->
@@ -200,31 +196,18 @@
             <hr class="hr" />
             <h3 id="camp_vis_header">Campaign visualization</h3>
             <table class="table-hover" id="camp_table" data-togle="table">
-                <thead>
-                    <tr>
-                        <th data-field="campaign_id">Campaign id</th>
-                        <th data-field="campaign_telephone">Campaign telephone</th>
-                        <th data-field="campaign_note">Note</th>
-                        <th data-field="campaign_type">Type</th>
-                        <th data-field="campaign_duration">Duration</th>
-                        <th data-field="campaign_start_date">Start date</th>
-                        <th data-field="campaign_end_date">End date</th>
-                        <th data-field="campaign_status">Status</th>
-                        <th data-field="campaign_identifier">Identifier</th>
-                        <th data-field="campaign_contacts_num">Number of contacts</th>
-                    </tr>
-                </thead>
             </table>
         </div>
-
-        <!-- Data table for users -->
-
-
         <!-- Data table for campaign -->
         <div class="container" id="bstr_camp" style="display: none;">
             <hr class="hr" />
             <h3 id="camp_list_header">Campaign list</h3>
-            <table class="table-hover" id="camp_table_time">
+            <div id="camp_toolbar">
+                <button id="button_vis" class="btn btn-primary">
+                    <i class="fa fa-eye"></i> Visualize selected campaigns
+                </button>
+            </div>
+            <table class="table-hover" id="camp_table_time" data-togle="table" data-toolbar="camp_toolbar">
             </table>
         </div>
         <!-- defer blocks execution of script untill document is loaded -->

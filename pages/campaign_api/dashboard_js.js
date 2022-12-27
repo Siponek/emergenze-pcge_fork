@@ -13,6 +13,7 @@ $(document).ready(() => {
   // TODO Remove get users button
   // TODO tabs for different objects
   // TODO rm bg from tables, create outline for groups of objects
+  // TODO add listeners for multiple visualizations
   const $dashboard_text = $("#dashboard_text");
   const $button_message_list = $("#button_msg_list");
   const $button_vis_campaign = $("#button_vis_campaign");
@@ -21,7 +22,6 @@ $(document).ready(() => {
   const $header_cmp_list = $("#camp_list_header");
   const $ui_date_start = $("#ui_date_start");
   const $ui_date_end = $("#ui_date_end");
-  const $bstr_results = $("#bstr_user");
   const $voice_picker_female = $("#voice_picker_female");
   const $voice_picker_male = $("#voice_picker_male");
   const $msg_send = $("#button_send_message");
@@ -680,7 +680,7 @@ $(document).ready(() => {
   function retr_user_list(root_div) {
     $dashboard_text.text("Retriving users list!");
     const $bstr_div = $("#bstr_user");
-    const user_table = $("#user_table_1");
+    const $user_table = $("#user_table_1");
     const request_options = {
       method: "GET",
       redirect: "follow",
@@ -701,7 +701,60 @@ $(document).ready(() => {
             user_group: item.gruppo,
           };
         });
-        fill_bootstrap_table(user_list_dict, user_table);
+        $user_table.bootstrapTable("destroy").bootstrapTable({
+          columns: [
+            {
+              field: "user_id",
+              title: "User ID",
+              align: "center",
+              valign: "middle",
+              sortable: true,
+            },
+            {
+              field: "user_name",
+              title: "User name",
+              align: "center",
+              valign: "middle",
+              sortable: true,
+            },
+            {
+              field: "user_surname",
+              title: "User surname",
+              align: "center",
+              valign: "middle",
+              sortable: true,
+            },
+            {
+              field: "user_group",
+              title: "User group",
+              align: "center",
+              valign: "middle",
+              sortable: true,
+            },
+          ],
+          data: user_list_dict,
+          uniqueId: "user_id",
+          striped: true,
+          sortable: true,
+          pageNumber: 1,
+          pageSize: 10,
+          pageList: [10, 25, 50, 100],
+          searchHighlight: true,
+          pagination: true,
+          search: true,
+          showToggle: true,
+          showExport: true,
+          exportDataType: "all",
+          exportTypes: [
+            "csv",
+            "txt",
+            "sql",
+            "doc",
+            "excel",
+            "xlsx",
+            "pdf",
+          ],
+        });
       })
       .catch((error) => {
         console.error("error", error);
