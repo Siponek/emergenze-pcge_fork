@@ -15,7 +15,6 @@ $(document).ready(() => {
   // TODO rm bg from tables, create outline for groups of objects
   const $dashboard_text = $("#dashboard_text");
   const $button_message_list = $("#button_msg_list");
-  const $button_user_list = $("#button_user_list");
   const $button_vis_campaign = $("#button_vis_campaign");
   const $button_get_camapaign = $("#button_campaign_from_to");
   const $button_create_campaign = $("#button_create_campaign");
@@ -152,9 +151,7 @@ $(document).ready(() => {
     }
     vis_campaign(python_api_url, $campaign_id_to_visualize);
   });
-  $button_user_list.click(() => {
-    retr_user_list(genova_api_url);
-  });
+
   $button_get_camapaign.click(() => {
     get_campaign_from_to(python_api_url, date_picked);
   });
@@ -382,7 +379,7 @@ $(document).ready(() => {
   };
 
   function fill_bootstrap_table(input, table_name) {
-    table_name.bootstrapTable({
+    table_name.bootstrapTable("destroy").bootstrapTable({
       data: input,
       uniqueId: "message_id",
       striped: true,
@@ -441,7 +438,7 @@ $(document).ready(() => {
           });
         }
         $bstr_message.show();
-        $message_table.bootstrapTable({
+        $message_table.bootstrapTable("destroy").bootstrapTable({
           columns: [
             {
               field: "state",
@@ -657,7 +654,7 @@ $(document).ready(() => {
           });
         }
         console.log(camp_list_dict);
-        $camp_table.bootstrapTable({
+        $camp_table.bootstrapTable("destroy").bootstrapTable({
           columns: [
             {
               field: "state",
