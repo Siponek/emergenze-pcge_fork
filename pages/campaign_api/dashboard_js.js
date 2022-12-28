@@ -38,7 +38,7 @@ let date_picked = {
   date_start: date_start_picked,
   date_end: date_end_picked,
 };
-let voice_picked = "F";
+let $voice_picked = "F";
 
 // Loads the userlist when document is loaded
 $(retr_user_list(genova_api_url));
@@ -99,38 +99,44 @@ $ui_date_end.change(() => {
 // JQuery style of registering listeners
 // TODO refactor to pure funtion style
 $voice_picker_female.click(() => {
-  voice_picked = $voice_picker_female.val();
-  console.log(`voice_picked: ${voice_picked}`);
-  alert(`voice_picked: ${voice_picked}`);
+  $voice_picked = $voice_picker_female.val();
+  console.log(`You have picked: ${$voice_picked} voice`);
 });
 $voice_picker_male.click(() => {
-  voice_picked = $voice_picker_male.val();
-  console.log(`voice_picked: ${voice_picked}`);
-  alert(`voice_picked: ${voice_picked}`);
+  $voice_picked = $voice_picker_male.val();
+  console.log(`You have picked: ${$voice_picked} voice`);
 });
 
 //* Main API calls
+// ? Create capmaign API call takes in 5 parameters. There is default behaviour on backend if something is not specified.
+// ? Create capmaign on backend will take message_ID if it is specified, otherwise it will take message_text/note and create a new message
+// ? It does not chec if the message already exists in the database when given message_ID
 $button_create_campaign.click(async () => {
-  const $msg_id_input = $("#msg_id").value;
+  const $msg_id_input = $("#msg_id").val();
+  const $msg_note = $("#msg_note").val();
   const group_number = document.querySelectorAll(
     "input[name='group_option']:checked",
   )[0].value;
-  console.log(`group_number vanilla: ${group_number}`);
-
   const message_returned = await retr_message(
     python_api_url,
     $msg_id_input,
   );
+
+  // pythonApi will create a new message if the message_id if no ID is given
+  // else {
+  //   msg_dict.message_text = message_returned.message.note;
+  // }
+
   let msg_dict = {
     message_text: "Empty message",
-    voice: voice_picked,
+    message_ID: $msg_id_input,
+    message_note: $msg_note,
+    voice: $voice_picked,
     group: group_number,
   };
-
   if (message_returned == null) {
     msg_dict.message_text = $("#msg_content").value;
-  } else {
-    msg_dict.message_text = message_returned.message.note;
+    msg_dict.message_ID = null;
   }
   await create_campaign(python_api_url, msg_dict);
   alert(`Campaign: Sent!`);
@@ -142,7 +148,7 @@ $button_message_list.click(async () => {
   await listen_delete();
 });
 $button_vis_campaign.click(() => {
-  $campaign_id_to_visualize = $("#camp_id").value;
+  $campaign_id_to_visualize = $("#camp_id").val();
   if ($campaign_id_to_visualize == "") {
     alert("Please insert a campaign id first");
     return;
@@ -155,9 +161,9 @@ $button_get_camapaign.click(() => {
 });
 $msg_send.click(() => {
   const msg_dict = {
-    message: document.getElementById("msg_content").value,
-    voice_gender: voice_picked,
-    note: document.getElementById("msg_note").value,
+    message: $("#msg_content").val(),
+    voice_gender: $voice_picked,
+    note: $("#msg_note").val(),
   };
   create_message(python_api_url, msg_dict);
 });
@@ -189,7 +195,9 @@ async function retr_message(root_div, message_id) {
   if (message_dict != null) {
     return message_dict;
   }
-  console.log(`element with id ${message_id} was not found`);
+  console.log(
+    `Element with id ${message_id} was not found. Creating new message!`,
+  );
   return null;
 }
 
@@ -200,8 +208,6 @@ function delete_message(root_div, message_id = "1") {
     method: "DELETE",
     body: form_data,
     redirect: "follow",
-    // set the request mode to no-cors
-    // mode: "no-cors",
   };
 
   fetch(`${root_div}_delete_older_message`, request_options)
@@ -219,13 +225,17 @@ function delete_message(root_div, message_id = "1") {
 async function create_campaign(
   root_div,
   dict_of_options = {
+    message_ID: "",
     message_text: "Test messagio per alert sistema",
+    message_note: "Test messagio per alert sistema",
     group: "1",
-    voice: voice_picked,
+    voice: $voice_picked,
   },
 ) {
   let form_data = new FormData();
   form_data.append("message_text", dict_of_options.message_text);
+  form_data.append("message_note", dict_of_options.message_note);
+  form_data.append("message_ID", dict_of_options.message_ID);
   form_data.append("group", dict_of_options.group);
   form_data.append("voice_gender", dict_of_options.voice);
 
@@ -336,7 +346,7 @@ async function create_campaign_from_table_msg(e, value, row, index) {
   )[0].value;
   const msg_dict = {
     message_text: "Empty message",
-    voice: voice_picked,
+    voice: $voice_picked,
     group: group_number,
   };
   msg_dict.message_text = row.message_note;
