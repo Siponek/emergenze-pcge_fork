@@ -143,29 +143,14 @@
 
                     <div class="container" id="API_date_container">
                         <h3 id="date_header">Select a date range for campaign search</h3>
-                        <div class="input-group input-daterange">
-                            <!-- <label for="ui_date_start">Pick a start date for campaign search</label> -->
-                            <input type="text" class="form-control" value="2012-04-05" id="ui_date_start">
+                        <div class="input-group input-daterange date datepicker">
+                            <div class="input-group-addon">From</div>
+                            <input type="text" placeholder="Select start date" class="form-control" value="2020-04-05"
+                                id="ui_date_start">
                             <div class="input-group-addon">to</div>
-                            <!-- <label for="ui_date_end">Pick a end date for campaign search</label> -->
-                            <input type="text" class="form-control" value="2012-04-19" id="ui_date_end">
+                            <input type="text" placeholder="Select end date" class="form-control" value="2022-04-19"
+                                id="ui_date_end">
                         </div>
-                        <!-- <div class="md-form md-outline input-with-post-icon input-group date datepicker"
-                            data-provide="datepicker">
-                            <label for="ui_date_start">Pick a start date for campaign search</label>
-                            <input placeholder="Select start date" type="text" class="form-control" id="ui_date_start">
-                            <div class="input-group-addon">
-                                <span class="glyphicon glyphicon-th"></span>
-                            </div>
-                        </div>
-                        <div class="md-form md-outline input-with-post-icon input-group date datepicker"
-                            data-provide="datepicker">
-                            <label for="ui_date_end">Pick a end date for campaign search</label>
-                            <input placeholder="Select end date" type="text" class="form-control" id="ui_date_end">
-                            <div class="input-group-addon">
-                                <span class="glyphicon glyphicon-th"></span>
-                            </div>
-                        </div> -->
                         <button class="btn btn-primary" id="button_campaign_from_to" type="button">Get campaign
                             from/to</button>
                         <hr class="hr" />
