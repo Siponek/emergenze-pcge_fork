@@ -18,14 +18,15 @@
 const $dashboard_text = $("#dashboard_text");
 const $button_message_list = $("#button_msg_list");
 const $button_vis_campaign = $("#button_vis_campaign");
+const $button_vis_multi_campaign = $("#button_vis");
 const $button_get_camapaign = $("#button_campaign_from_to");
 const $button_create_campaign = $("#button_create_campaign");
 const $button_create_message = $("#button_create_message");
+const $button_del = $("#button_delete");
 const $header_cmp_list = $("#camp_list_header");
 const $ui_date_start = $("#ui_date_start");
 const $ui_date_end = $("#ui_date_end");
 const $message_table = $("#msg_table");
-const $button_del = $("#button_delete");
 
 //* API URL
 const python_api_url =
@@ -158,6 +159,12 @@ $button_vis_campaign.click(() => {
     return;
   }
   vis_campaign(python_api_url, $campaign_id_to_visualize);
+});
+$button_vis_multi_campaign.click(() => {
+  const $camp_table = $("#camp_table_time");
+  let ids = getIdSelections($camp_table);
+  console.log("ids", ids);
+  // vis_campaign(python_api_url, $campaign_id_to_visualize);
 });
 
 $button_get_camapaign.click(() => {
@@ -410,15 +417,15 @@ async function retr_message_list(root_div) {
     .then((async_result) => {
       const message_list = async_result.result;
       const message_list_dict = [];
-      for (let i in message_list) {
+      Object.entries(message_list).forEach(([key, value]) => {
         message_list_dict.push({
-          message_date: message_list[i].data_creazione,
-          message_dimension: message_list[i].dimensione,
-          message_duration: message_list[i].durata,
-          message_id: message_list[i].id_messaggio,
-          message_note: message_list[i].note,
+          message_date: value.data_creazione,
+          message_dimension: value.dimensione,
+          message_duration: value.durata,
+          message_id: value.id_messaggio,
+          message_note: value.note,
         });
-      }
+      });
       $bstr_message.show();
       $message_table.bootstrapTable("destroy").bootstrapTable({
         columns: [
@@ -864,6 +871,17 @@ function get_campaign_from_to(
           "pdf",
         ],
       });
+      $camp_table.on(
+        "check.bs.table uncheck.bs.table " +
+          "check-all.bs.table uncheck-all.bs.table",
+        () => {
+          $button_vis_multi_campaign.prop(
+            "disabled",
+            !$camp_table.bootstrapTable("getSelections").length,
+          );
+        },
+      );
+      $button_vis_multi_campaign.prop("disabled", true);
     })
     .catch((error) => console.log("error", error));
 }
