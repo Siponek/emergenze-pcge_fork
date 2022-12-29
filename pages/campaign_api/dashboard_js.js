@@ -20,12 +20,10 @@ const $button_message_list = $("#button_msg_list");
 const $button_vis_campaign = $("#button_vis_campaign");
 const $button_get_camapaign = $("#button_campaign_from_to");
 const $button_create_campaign = $("#button_create_campaign");
+const $button_create_message = $("#button_create_message");
 const $header_cmp_list = $("#camp_list_header");
 const $ui_date_start = $("#ui_date_start");
 const $ui_date_end = $("#ui_date_end");
-const $voice_picker_female = $("#voice_picker_female");
-const $voice_picker_male = $("#voice_picker_male");
-const $msg_send = $("#button_send_message");
 const $message_table = $("#msg_table");
 const $button_del = $("#button_delete");
 
@@ -42,7 +40,6 @@ let date_picked = {
   date_end: date_end_picked,
 };
 // default values for voice gender
-let $voice_picked = "F";
 
 // Loads the userlist when document is loaded
 $(retr_user_list(genova_api_url));
@@ -96,16 +93,9 @@ $ui_date_end.change(() => {
   date_picked.date_end = date_end_picked;
 });
 
+// TODO change this to radio buttons
 // JQuery style of registering listeners
 // TODO refactor to pure funtion style
-$voice_picker_female.click(() => {
-  $voice_picked = $voice_picker_female.val();
-  console.log(`You have picked: ${$voice_picked} voice`);
-});
-$voice_picker_male.click(() => {
-  $voice_picked = $voice_picker_male.val();
-  console.log(`You have picked: ${$voice_picked} voice`);
-});
 
 //* Main API calls
 // ? Create capmaign API call takes in 5 parameters. There is default behaviour on backend if something is not specified.
@@ -115,9 +105,12 @@ $button_create_campaign.click(async () => {
   const $msg_id_input = $("#msg_id").val();
   const $msg_note = $("#msg_note").val();
   const $msg_text = $("#msg_content").val();
-  const group_number = document.querySelectorAll(
+  const group_number = document.querySelector(
     "input[name='group_option']:checked",
-  )[0].value;
+  ).value;
+  const voice_picked = document.querySelector(
+    "input[name='voice_options']:checked",
+  ).value;
   const message_returned = await retr_message(
     python_api_url,
     $msg_id_input,
@@ -125,10 +118,10 @@ $button_create_campaign.click(async () => {
   // pyApi will create a new message if the message_id if no ID is given
   // retr_message call does not return
   let msg_dict = {
-    message_text: "Empty message",
+    message_text: $msg_text,
     message_ID: $msg_id_input,
     message_note: $msg_note,
-    voice: $voice_picked,
+    voice: voice_picked,
     group: group_number,
   };
   // if message_returned is null, then the message does not exist in the database
@@ -138,8 +131,6 @@ $button_create_campaign.click(async () => {
       alert("Please insert a message or select a message id");
       return;
     }
-    msg_dict.message_text = $msg_text;
-    msg_dict.message_note = $msg_note;
     msg_dict.message_ID = null;
   }
   // if message_returned is not null, then the message exists in the database
@@ -147,6 +138,8 @@ $button_create_campaign.click(async () => {
   else {
     msg_dict.message_text = message_returned.message.note;
   }
+  // If bad ID is sent the backend will not check if the message exists in the database
+  console.log("Object for creating a message", msg_dict);
   await create_campaign(python_api_url, msg_dict);
   alert(`Campaign: Sent!`);
 });
@@ -168,12 +161,16 @@ $button_vis_campaign.click(() => {
 $button_get_camapaign.click(() => {
   get_campaign_from_to(python_api_url, date_picked);
 });
-$msg_send.click(() => {
+$button_create_message.click(() => {
+  voice_picked = document.querySelector(
+    "input[name='voice_options']:checked",
+  ).value;
   const msg_dict = {
     message: $("#msg_content").val(),
-    voice_gender: $voice_picked,
+    voice_gender: voice_picked,
     note: $("#msg_note").val(),
   };
+  console.log("Object for message:", msg_dict);
   create_message(python_api_url, msg_dict);
 });
 
@@ -240,7 +237,7 @@ async function create_campaign(
     message_text: "Test messagio per alert sistema",
     message_note: "Test messagio per alert sistema",
     group: "1",
-    voice: $voice_picked,
+    voice: voice_picked,
   },
 ) {
   let form_data = new FormData();
@@ -338,7 +335,7 @@ function op_formttr_msg_list(value, row, index) {
   ].join("");
 }
 
-/**Operator format for the bootstrap table campaign list. Adds icons and <a> tags to buttons */
+/** Operator format for the bootstrap table campaign list. Adds icons and <a> tags to buttons */
 function op_formttr_cmp_list(value, row, index) {
   const visualize_campaign_class = "vis_camp_event";
   return [
@@ -350,12 +347,15 @@ function op_formttr_cmp_list(value, row, index) {
 
 /** Creates message from message list entry */
 async function create_campaign_from_table_msg(e, value, row, index) {
-  const group_number = document.querySelectorAll(
+  const group_number = document.querySelector(
     "input[name='group_option']:checked",
-  )[0].value;
+  ).value;
+  const voice_picked = document.querySelector(
+    "input[name='voice_options']:checked",
+  ).value;
   const msg_dict = {
     message_text: "Empty message",
-    voice: $voice_picked,
+    voice: voice_picked,
     group: group_number,
   };
   msg_dict.message_text = row.message_note;
