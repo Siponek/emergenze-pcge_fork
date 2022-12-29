@@ -43,7 +43,7 @@ let date_picked = {
 
 // Loads the userlist when document is loaded
 $(retr_user_list(genova_api_url));
-// Register the date picker with JQuery
+// Init date picker with JQuery
 $(() => {
   $ui_date_end.datepicker({
     dateFormat: "yy-mm-dd",
@@ -58,6 +58,7 @@ $(() => {
     clearBtn: true,
     language: "en",
     orientation: "bottom auto",
+    showAnim: "fadeIn",
   });
 });
 $(() => {
@@ -74,6 +75,7 @@ $(() => {
     clearBtn: true,
     language: "en",
     orientation: "bottom auto",
+    showAnim: "fadeIn",
   });
 });
 
@@ -159,6 +161,11 @@ $button_vis_campaign.click(() => {
 });
 
 $button_get_camapaign.click(() => {
+  const date_picked = {
+    date_start: $ui_date_start.val(),
+    date_end: $ui_date_end.val(),
+  };
+  console.log("Date picked", date_picked);
   get_campaign_from_to(python_api_url, date_picked);
 });
 $button_create_message.click(() => {
@@ -748,10 +755,8 @@ function get_campaign_from_to(
   const $camp_table = $("#camp_table_time");
   const date_start = date_dict.date_start + " 12:00";
   const date_end = date_dict.date_end + " 12:00";
-  console.log("date_start form date_dict: " + date_start);
-  console.log("date_end form date_dict: " + date_end);
   $header_cmp_list.text(
-    "Campaign list from " + date_start + " to " + date_end,
+    `Campaign list from ${date_start} to ${date_end}`,
   );
   let form_data = new FormData();
   form_data.append("date_start", date_start);
@@ -767,18 +772,17 @@ function get_campaign_from_to(
     .then((async_anwser) => {
       $bstr_div_camp.show();
       const camp_list_json = async_anwser.result;
-      console.log(camp_list_json);
-      let camp_list_dict = [];
-      for (let i in camp_list_json) {
+      const camp_list_dict = [];
+      Object.entries(camp_list_json).forEach(([key, value]) => {
         camp_list_dict.push({
-          camp_id: camp_list_json[i].id_campagna,
-          camp_type: camp_list_json[i].tipo,
-          camp_date: camp_list_json[i].data_campagna,
-          camp_user: camp_list_json[i].utente,
-          camp_contact: camp_list_json[i].contatti,
-          camp_identifier: camp_list_json[i].identificativo,
+          camp_id: value.id_campagna,
+          camp_type: value.tipo,
+          camp_date: value.data_campagna,
+          camp_user: value.utente,
+          camp_contact: value.contatti,
+          camp_identifier: value.identificativo,
         });
-      }
+      });
       console.log(camp_list_dict);
       $camp_table.bootstrapTable("destroy").bootstrapTable({
         columns: [
