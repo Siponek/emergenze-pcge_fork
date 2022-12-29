@@ -13,6 +13,8 @@
 // // TODO tabs for different objects
 // TODO rm bg from tables, create outline for groups of objects
 // TODO add listeners for multiple visualizations
+
+// Cash the DOM elements
 const $dashboard_text = $("#dashboard_text");
 const $button_message_list = $("#button_msg_list");
 const $button_vis_campaign = $("#button_vis_campaign");
@@ -32,20 +34,18 @@ const python_api_url =
   "http://localhost:8000/emergenze/user_campaign/";
 const genova_api_url = "https://emergenze-apit.comune.genova.it/";
 
+// default values for the date picker
 let date_start_picked = "2020-06-01";
 let date_end_picked = "2022-01-31";
 let date_picked = {
   date_start: date_start_picked,
   date_end: date_end_picked,
 };
+// default values for voice gender
 let $voice_picked = "F";
 
 // Loads the userlist when document is loaded
 $(retr_user_list(genova_api_url));
-$(() => {
-  console.log("Hello World.This page is loaded!");
-});
-
 // Register the date picker with JQuery
 $(() => {
   $ui_date_end.datepicker({
@@ -114,6 +114,7 @@ $voice_picker_male.click(() => {
 $button_create_campaign.click(async () => {
   const $msg_id_input = $("#msg_id").val();
   const $msg_note = $("#msg_note").val();
+  const $msg_text = $("#msg_content").val();
   const group_number = document.querySelectorAll(
     "input[name='group_option']:checked",
   )[0].value;
@@ -121,12 +122,8 @@ $button_create_campaign.click(async () => {
     python_api_url,
     $msg_id_input,
   );
-
-  // pythonApi will create a new message if the message_id if no ID is given
-  // else {
-  //   msg_dict.message_text = message_returned.message.note;
-  // }
-
+  // pyApi will create a new message if the message_id if no ID is given
+  // retr_message call does not return
   let msg_dict = {
     message_text: "Empty message",
     message_ID: $msg_id_input,
@@ -134,15 +131,27 @@ $button_create_campaign.click(async () => {
     voice: $voice_picked,
     group: group_number,
   };
+  // if message_returned is null, then the message does not exist in the database
+  // send the message_text/note to the backend so it will create new message
   if (message_returned == null) {
-    msg_dict.message_text = $("#msg_content").value;
+    if ($msg_note == "") {
+      alert("Please insert a message or select a message id");
+      return;
+    }
+    msg_dict.message_text = $msg_text;
+    msg_dict.message_note = $msg_note;
     msg_dict.message_ID = null;
+  }
+  // if message_returned is not null, then the message exists in the database
+  // send the message_id to the backend so it will use the existing message
+  else {
+    msg_dict.message_text = message_returned.message.note;
   }
   await create_campaign(python_api_url, msg_dict);
   alert(`Campaign: Sent!`);
 });
 
-// JS Registering listeners for the buttons
+// JQuery registering listeners for the buttons
 $button_message_list.click(async () => {
   await retr_message_list(python_api_url);
   await listen_delete();
@@ -168,6 +177,7 @@ $msg_send.click(() => {
   create_message(python_api_url, msg_dict);
 });
 
+/** Returns the list of messages from the database and puts it in the BS table*/
 async function retr_message(root_div, message_id) {
   const request_options = {
     method: "GET",
@@ -201,6 +211,7 @@ async function retr_message(root_div, message_id) {
   return null;
 }
 
+/** Deletes the message from the database*/
 function delete_message(root_div, message_id = "1") {
   const form_data = new FormData();
   form_data.append("message_id_delete", message_id);
@@ -221,7 +232,7 @@ function delete_message(root_div, message_id = "1") {
     });
 }
 
-// TODO Add option for using messages from the database
+/** Calls the backend to create a new campaign*/
 async function create_campaign(
   root_div,
   dict_of_options = {
@@ -253,6 +264,8 @@ async function create_campaign(
     .catch((error) => console.log("error", error));
 }
 
+/** Creates new message in the database*/
+//! This is vunerable to SQL injection
 function create_message(
   root_div,
   dict_of_options = {
@@ -262,7 +275,6 @@ function create_message(
   },
 ) {
   $dashboard_text.text("Creating message!");
-  // return console.log('dict_of_options', dict_of_options);
   let formdata = new FormData();
   if (dict_of_options.message === "") {
     dict_of_options.message = "EMPTY MESSAGE";
@@ -286,10 +298,8 @@ function create_message(
     })
     .catch((error) => console.log("error", error));
 }
-// TODO get querySelectorAll
 
-/* This function operates on bootstrap table delete button for
-  deletions of rows*/
+/** This function operates on bootstrap table delete button for deletions of rows*/
 async function listen_delete() {
   $(() => {
     $button_del.prop(
@@ -313,6 +323,7 @@ async function listen_delete() {
   });
 }
 
+/** Operator format for the bootstrap table message list. Adds icons and <a> tags to buttons*/
 function op_formttr_msg_list(value, row, index) {
   const remove_msg_class = "remove_msg";
   const create_campaign_class = "create_campaign";
@@ -327,6 +338,7 @@ function op_formttr_msg_list(value, row, index) {
   ].join("");
 }
 
+/**Operator format for the bootstrap table campaign list. Adds icons and <a> tags to buttons */
 function op_formttr_cmp_list(value, row, index) {
   const visualize_campaign_class = "vis_camp_event";
   return [
@@ -336,11 +348,8 @@ function op_formttr_cmp_list(value, row, index) {
   ].join("");
 }
 
+/** Creates message from message list entry */
 async function create_campaign_from_table_msg(e, value, row, index) {
-  // const message_returned = await retr_message(
-  //   python_api_url,
-  //   row.message_id,
-  // );
   const group_number = document.querySelectorAll(
     "input[name='group_option']:checked",
   )[0].value;
@@ -357,6 +366,7 @@ async function create_campaign_from_table_msg(e, value, row, index) {
   );
 }
 
+/**  Operates <a> tags events in bootstrap tables*/
 window.operateEvents = {
   // This is just an example of how to use custom buttons
   "click .create_campaign": create_campaign_from_table_msg,
@@ -375,33 +385,9 @@ window.operateEvents = {
   },
 };
 
-function fill_bootstrap_table(input, table_name) {
-  table_name.bootstrapTable("destroy").bootstrapTable({
-    data: input,
-    uniqueId: "message_id",
-    striped: true,
-    sortable: true,
-    pageNumber: 1,
-    pageSize: 10,
-    pageList: [10, 25, 50, 100],
-    searchHighlight: true,
-    pagination: true,
-    search: true,
-    showToggle: true,
-    showExport: true,
-    exportDataType: "all",
-    exportTypes: ["csv", "txt", "sql", "doc", "excel", "xlsx", "pdf"],
-  });
-}
+// todo: make a generic function for creating bs tables
 function create_tables(table_name, dict_of_columns) {}
 
-function responseHandler(res) {
-  $.each(res.rows, function (i, row) {
-    row.state = $.inArray(row.id, selections) !== -1;
-  });
-  return res;
-}
-// Retrieve the list of messages from url with GET method
 /**Retrieves list of messages in JSON format */
 async function retr_message_list(root_div) {
   $dashboard_text.text("Retriving message list!");
@@ -750,6 +736,7 @@ function retr_user_list(root_div) {
     });
 }
 
+/** Retrieves campaign in given timeframe. Creates bootstrap table and fills the data */
 function get_campaign_from_to(
   root_div = "http://localhost:8000/",
   date_dict = {
