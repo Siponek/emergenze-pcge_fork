@@ -3,28 +3,28 @@
 //$page = $_SERVER['PHP_SELF'];
 //$sec = "60";
 
-
-function integerToRoman($integer) {
+function integerToRoman($integer)
+{
     // Convert the integer into an integer (just to make sure)
     $integer = intval($integer);
-    $result = '';
+    $result = "";
 
     // Create a lookup array that contains all of the Roman numerals.
-    $lookup = array(
-        'M'  => 1000,
-        'CM' => 900,
-        'D'  => 500,
-        'CD' => 400,
-        'C'  => 100,
-        'XC' => 90,
-        'L'  => 50,
-        'XL' => 40,
-        'X'  => 10,
-        'IX' => 9,
-        'V'  => 5,
-        'IV' => 4,
-        'I'  => 1
-    );
+    $lookup = [
+        "M" => 1000,
+        "CM" => 900,
+        "D" => 500,
+        "CD" => 400,
+        "C" => 100,
+        "XC" => 90,
+        "L" => 50,
+        "XL" => 40,
+        "X" => 10,
+        "IX" => 9,
+        "V" => 5,
+        "IV" => 4,
+        "I" => 1,
+    ];
 
     foreach ($lookup as $roman => $value) {
         // Determine the number of matches
@@ -39,9 +39,7 @@ function integerToRoman($integer) {
 
     // The Roman numeral should be built, return it
     return $result;
-}
-
-?>
+} ?>
 
 
 <meta http-equiv="Cache-control" content="public">
@@ -106,21 +104,17 @@ $leaflet_measure_path = "/../pages/l_map/css/leaflet-measure.css";
 }
 
 .panel-allerta {
-    border-color: <?php echo $color_allerta;
-    ?>;
+    border-color: <?php echo $color_allerta; ?>;
 }
 
 .panel-allerta>.panel-heading {
-    border-color: <?php echo $color_allerta;
-    ?>;
+    border-color: <?php echo $color_allerta; ?>;
     color: white;
-    background-color: <?php echo $color_allerta;
-    ?>;
+    background-color: <?php echo $color_allerta; ?>;
 }
 
 .panel-allerta>a {
-    color: <?php echo $color_allerta;
-    ?>;
+    color: <?php echo $color_allerta; ?>;
 }
 
 .panel-allerta>a:hover {
@@ -225,7 +219,7 @@ $leaflet_measure_path = "/../pages/l_map/css/leaflet-measure.css";
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"
     integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<link href="https://code.jquery.com/ui/1.12.1/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
+<link href="https://code.jquery.com/ui/1.12.1/themes/excite-bike/jquery-ui.css" rel="stylesheet">
 
 <!-- GRAFICI d3js -->
 <script src="https://d3js.org/d3.v4.min.js"></script>
