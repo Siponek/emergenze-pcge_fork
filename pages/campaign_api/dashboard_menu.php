@@ -5,9 +5,9 @@
     <head>
         <meta charset="utf-8">
         <meta name="description" content="">
-        <meta name="author" content="szymon">
+        <meta name="author" content="Szymon at Gter">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Dashboard - Python API GUI</title>
+        <title>Emergenze PCGE Dashboard</title>
         <?php
         $_DEBUG = false;
         define("ROOT_DIR", realpath(__DIR__ . "/.."));
@@ -213,6 +213,5 @@
         <!-- defer blocks execution of script untill document is loaded -->
         <script type="text/javascript" defer src="dashboard_js.js"></script>
     </body>
-
 
 </html>
