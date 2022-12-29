@@ -95,40 +95,29 @@
                                     placeholder="ID of pre-made message ">
                             </div>
                         </form>
-                        <div class="card">
-                            <label>
-                                <input type="radio" class="option-input radio" value=1 name="group_option"
-                                    id="radio_grp_1" />
-                                Group 1
+                        <div class="btn-group" data-toggle="buttons">
+                            <label class="btn btn-primary active">
+                                <input type="radio" value=1 name="group_option" id="radio_grp_1" checked> Group 1
                             </label>
-                            <label>
-                                <input type="radio" class="option-input radio" value=2 name="group_option"
-                                    id="radio_grp_2" checked />
-                                Group 2
+                            <label class="btn btn-primary">
+                                <input type="radio" value=2 name="group_option" id="radio_grp_2"> Group 2
                             </label>
-
                         </div>
+
                         <!-- Buttons voice -->
                         <div class="btn-group">
-
                             <div class="btn-group" data-toggle="buttons">
-                                <button class="btn btn-primary" type="submit" name="voice_options"
-                                    id="voice_picker_female" value="F">
-                                    Female
-                                    voice
-                                </button>
-                            </div>
-
-                            <div class="btn-group" data-toggle="buttons">
-                                <button class="btn btn-primary" type="submit" name="voice_options"
-                                    id="voice_picker_male" value="M">
-                                    Male
-                                    voice</button>
+                                <label class="btn btn-primary active" id="voice_picker_female">
+                                    <input type="radio" value="F" name="voice_options" checked> Female voice</input>
+                                </label>
+                                <label class="btn btn-primary" id="voice_picker_male">
+                                    <input type="radio" value="M" name="voice_options"> Male voice</input>
+                                </label>
                             </div>
                         </div>
                         <div class="btn-group">
                             <div class="btn-group" data-toggle="buttons">
-                                <button class="btn btn-success" type="submit" id="button_send_message">Create a
+                                <button class="btn btn-success" type="submit" id="button_create_message">Create a
                                     message</button>
                             </div>
                             <!-- <div class="col-2 text-left" role="group"> -->
@@ -151,8 +140,17 @@
                         <hr class="hr" />
 
                     </div>
+
                     <div class="container" id="API_date_container">
-                        <div class="md-form md-outline input-with-post-icon input-group date datepicker"
+                        <h3 id="date_header">Select a date range for campaign search</h3>
+                        <div class="input-group input-daterange">
+                            <!-- <label for="ui_date_start">Pick a start date for campaign search</label> -->
+                            <input type="text" class="form-control" value="2012-04-05" id="ui_date_start">
+                            <div class="input-group-addon">to</div>
+                            <!-- <label for="ui_date_end">Pick a end date for campaign search</label> -->
+                            <input type="text" class="form-control" value="2012-04-19" id="ui_date_end">
+                        </div>
+                        <!-- <div class="md-form md-outline input-with-post-icon input-group date datepicker"
                             data-provide="datepicker">
                             <label for="ui_date_start">Pick a start date for campaign search</label>
                             <input placeholder="Select start date" type="text" class="form-control" id="ui_date_start">
@@ -167,7 +165,7 @@
                             <div class="input-group-addon">
                                 <span class="glyphicon glyphicon-th"></span>
                             </div>
-                        </div>
+                        </div> -->
                         <button class="btn btn-primary" id="button_campaign_from_to" type="button">Get campaign
                             from/to</button>
                         <hr class="hr" />
