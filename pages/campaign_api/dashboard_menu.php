@@ -26,13 +26,12 @@
         } catch (Exception $e) {
             echo "Caught exception: ", $e->getMessage(), "\n";
         }
-
-// This is an example of how to use SQL queries:
-// $my_query = "SELECT * FROM users.utenti WHERE username = '$_SESSION[username]';";
-// $result = pg_query($conn, $my_query);
-// $r = pg_fetch_assoc($result);
-// echo $r['username'];
-?>
+        ?>
+        <!-- // This is an example of how to use SQL queries:
+        // $my_query = "SELECT * FROM users.utenti WHERE username = '$_SESSION[username]';";
+        // $result = pg_query($conn, $my_query);
+        // $r = pg_fetch_assoc($result);
+        // echo $r['username']; -->
         <style>
         body {
             margin-top: 100px;
@@ -60,10 +59,10 @@
             <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active"><a href="#user_tab" aria-controls="users" role="tab"
                         data-toggle="tab">Users</a></li>
-                <li role="presentation"><a href="#camp_tab" aria-controls="campaigns" role="tab"
-                        data-toggle="tab">Campaigns</a></li>
                 <li role="presentation"><a href="#msg_tab" aria-controls="messages" role="tab"
                         data-toggle="tab">Messages</a></li>
+                <li role="presentation"><a href="#camp_tab" aria-controls="campaigns" role="tab"
+                        data-toggle="tab">Campaigns dashboad</a></li>
             </ul>
 
             <!-- Tab panes -->
@@ -80,7 +79,7 @@
                     <hr class="hr" />
                 </div>
                 <div role="tabpanel" class="tab-pane fade" id="msg_tab">
-                    <h1 id="dashboard_header">Messages visualization Dashboard</h1>
+                    <h1 id="dashboard_header">Messages dashboard</h1>
                     <div class="container" id="API_bttn_msg_container">
                         <button class="btn btn-primary" id="button_msg_list" type="button">Get message list </button>
                         </button>
@@ -129,6 +128,18 @@
                                     campaign</button>
                             </div>
                         </div>
+                        <!-- Add an outline for container -->
+                        <!-- Data table for messages -->
+                        <div class="container" id="bstr_message" style="display: none;">
+                            <h3 id="msg_list_header">Messages visualization</h3>
+                            <div id="msg_toolbar">
+                                <button id="button_delete" class="btn btn-danger">
+                                    <i class="fa fa-trash"></i> Delete selected messages
+                                </button>
+                            </div>
+                            <table class="table-hover " id="msg_table" data-togle="table" data-toolbar="msg_toolbar">
+                            </table>
+                        </div>
                     </div>
                 </div>
                 <div role="tabpanel" class="tab-pane fade" id="camp_tab">
@@ -154,45 +165,34 @@
                         <button class="btn btn-primary" id="button_campaign_from_to" type="button">Get campaign
                             from/to</button>
                         <hr class="hr" />
+
+                    </div>
+                    <!-- Add an outline for container -->
+                    <!-- Data table for campaigns -->
+                    <div class="container " id="bstr_camp_vis" style="display: none;">
+                        <hr class="hr" />
+                        <h3 id="camp_vis_header">Campaign visualization</h3>
+                        <table class="table-hover" id="camp_table" data-togle="table">
+                        </table>
+                    </div>
+                    <!-- Data table for campaign -->
+                    <div class="container" id="bstr_camp" style="display: none;">
+                        <hr class="hr" />
+                        <h3 id="camp_list_header">Campaign list</h3>
+                        <div id="camp_toolbar">
+                            <!-- <button id="button_vis" class="btn btn-primary">
+                    <i class="fa fa-eye"></i> Visualize selected campaigns
+                </button> -->
+                        </div>
+                        <table class="table-hover" id="camp_table_time" data-togle="table" data-toolbar="camp_toolbar">
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Add an outline for container -->
-        <div class="container" id="API_results_container">
-            <h1 id="results_header">Results</h1>
-        </div>
-        <!-- Data table for messages -->
-        <div class="container" id="bstr_message" style="display: none;">
-            <h3 id="msg_list_header">Messages</h3>
-            <div id="msg_toolbar">
-                <button id="button_delete" class="btn btn-danger">
-                    <i class="fa fa-trash"></i> Delete selected messages
-                </button>
-            </div>
-            <table class="table-hover " id="msg_table" data-togle="table" data-toolbar="msg_toolbar">
-            </table>
-        </div>
-        <!-- Data table for campaigns -->
-        <div class="container " id="bstr_camp_vis" style="display: none;">
-            <hr class="hr" />
-            <h3 id="camp_vis_header">Campaign visualization</h3>
-            <table class="table-hover" id="camp_table" data-togle="table">
-            </table>
-        </div>
-        <!-- Data table for campaign -->
-        <div class="container" id="bstr_camp" style="display: none;">
-            <hr class="hr" />
-            <h3 id="camp_list_header">Campaign list</h3>
-            <div id="camp_toolbar">
-                <button id="button_vis" class="btn btn-primary">
-                    <i class="fa fa-eye"></i> Visualize selected campaigns
-                </button>
-            </div>
-            <table class="table-hover" id="camp_table_time" data-togle="table" data-toolbar="camp_toolbar">
-            </table>
-        </div>
+
+
         <!-- defer blocks execution of script untill document is loaded -->
         <script type="text/javascript" defer src="dashboard_js.js"></script>
     </body>
