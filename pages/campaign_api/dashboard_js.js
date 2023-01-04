@@ -7,18 +7,21 @@
 // // TODO button for creating new campaigns from message_list table
 // ? Date from JQueryUI handles only dates, not time. So the time is always 00:00:00
 // ! Bootstrap table accepts only Arrays as input, not JSON objects
-// TODO button for visualizing the campaign from campaign_list table
-// TODO Move the results to different functions for clear distinction
-// TODO Remove get users button
+// // TODO button for visualizing the campaign from campaign_list table
+// // TODO Remove get users button
 // // TODO tabs for different objects
 // TODO rm bg from tables, create outline for groups of objects
 // TODO add listeners for multiple visualizations
+// TODO remove mass viz button
+// TODO sort campaign table by newsest
+// TODO move mapiangs to third pos, change tab name to camapiosh dashboard and results to dashboard
+// TODO Move the results to different functions for clear distinction
 
 // Cash the DOM elements
 const $dashboard_text = $("#dashboard_text");
 const $button_message_list = $("#button_msg_list");
 const $button_vis_campaign = $("#button_vis_campaign");
-const $button_vis_multi_campaign = $("#button_vis");
+// const $button_vis_multi_campaign = $("#button_vis");
 const $button_get_camapaign = $("#button_campaign_from_to");
 const $button_create_campaign = $("#button_create_campaign");
 const $button_create_message = $("#button_create_message");
@@ -160,12 +163,12 @@ $button_vis_campaign.click(() => {
   }
   vis_campaign(python_api_url, $campaign_id_to_visualize);
 });
-$button_vis_multi_campaign.click(() => {
-  const $camp_table = $("#camp_table_time");
-  let ids = getIdSelections($camp_table);
-  console.log("ids", ids);
-  // vis_campaign(python_api_url, $campaign_id_to_visualize);
-});
+// $button_vis_multi_campaign.click(() => {
+//   const $camp_table = $("#camp_table_time");
+//   let ids = getIdSelections($camp_table);
+//   console.log("ids", ids);
+//   // vis_campaign(python_api_url, $campaign_id_to_visualize);
+// });
 
 $button_get_camapaign.click(() => {
   const date_picked = {
@@ -313,14 +316,14 @@ function create_message(
 /** This function operates on bootstrap table delete button for deletions of rows*/
 async function listen_delete() {
   $(() => {
-    $button_del.prop(
-      "disabled",
-      !$message_table.bootstrapTable("getSelections").length,
-    );
+    // $button_del.prop(
+    //   "disabled",
+    //   !$message_table.bootstrapTable("getSelections").length,
+    // );
     $button_del.click(() => {
       console.log("Button_del clicked");
       let ids = getIdSelections($message_table);
-      $message_table.bootstrapTable("remove_msg", {
+      $message_table.bootstrapTable("remove", {
         field: "message_id",
         values: ids,
       });
@@ -329,7 +332,7 @@ async function listen_delete() {
         delete_message(python_api_url, element);
         console.log("Deleted id:", element);
       });
-      $button_del.prop("disabled", true);
+      // $button_del.prop("disabled", true);
     });
   });
 }
@@ -339,11 +342,11 @@ function op_formttr_msg_list(value, row, index) {
   const remove_msg_class = "remove_msg";
   const create_campaign_class = "create_campaign";
   return [
-    `<a class="${create_campaign_class}" href="javascript:void(0)" title="Create">`,
+    `<a class="${create_campaign_class}" href="javascript:void(0)" title="Create campaign from this message">`,
     `<i class="fa fa-bullhorn"></i>`,
     "</a>",
     ,
-    `<a class="${remove_msg_class}" href="javascript:void(0)" title="Remove">`,
+    `<a class="${remove_msg_class}" href="javascript:void(0)" title="Remove this message from database">`,
     `<i class="fa fa-trash"></i>`,
     "</a>",
   ].join("");
@@ -871,17 +874,17 @@ function get_campaign_from_to(
           "pdf",
         ],
       });
-      $camp_table.on(
-        "check.bs.table uncheck.bs.table " +
-          "check-all.bs.table uncheck-all.bs.table",
-        () => {
-          $button_vis_multi_campaign.prop(
-            "disabled",
-            !$camp_table.bootstrapTable("getSelections").length,
-          );
-        },
-      );
-      $button_vis_multi_campaign.prop("disabled", true);
+      // $camp_table.on(
+      //   "check.bs.table uncheck.bs.table " +
+      //     "check-all.bs.table uncheck-all.bs.table",
+      //   () => {
+      //     $button_vis_multi_campaign.prop(
+      //       "disabled",
+      //       !$camp_table.bootstrapTable("getSelections").length,
+      //     );
+      //   },
+      // );
+      // $button_vis_multi_campaign.prop("disabled", true);
     })
     .catch((error) => console.log("error", error));
 }
