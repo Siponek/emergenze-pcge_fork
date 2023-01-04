@@ -1,23 +1,4 @@
-// This is a JQuery function that is called when the page is loaded
-// // TODO Make a call for users list when the page is loaded
-// ? TODO Fetching data stays iun browser cache, and for the same data it is downloaded again and again
-// ? TODO: Add a button to clear the cache
-// // TODO: Make this a class of buttons, so that the same function can be called with different parameters
-// // TODO Add button for deletion of messages in message table
-// // TODO button for creating new campaigns from message_list table
-// ? Date from JQueryUI handles only dates, not time. So the time is always 00:00:00
-// ! Bootstrap table accepts only Arrays as input, not JSON objects
-// // TODO button for visualizing the campaign from campaign_list table
-// // TODO Remove get users button
-// // TODO tabs for different objects
-// TODO rm bg from tables, create outline for groups of objects
-// TODO add listeners for multiple visualizations
-// TODO remove mass viz button
-// TODO sort campaign table by newsest
-// TODO move mapiangs to third pos, change tab name to camapiosh dashboard and results to dashboard
-// TODO Move the results to different functions for clear distinction
-
-// Cash the DOM elements
+// Cashe the DOM elements
 const $dashboard_text = $("#dashboard_text");
 const $button_message_list = $("#button_msg_list");
 const $button_vis_campaign = $("#button_vis_campaign");
@@ -768,7 +749,7 @@ function get_campaign_from_to(
   const date_start = date_dict.date_start + " 12:00";
   const date_end = date_dict.date_end + " 12:00";
   $header_cmp_list.text(
-    `Campaign list from ${date_start} to ${date_end}`,
+    `Campaign dashboard from ${date_start} to ${date_end}`,
   );
   let form_data = new FormData();
   form_data.append("date_start", date_start);
@@ -878,17 +859,6 @@ function get_campaign_from_to(
           "pdf",
         ],
       });
-      // $camp_table.on(
-      //   "check.bs.table uncheck.bs.table " +
-      //     "check-all.bs.table uncheck-all.bs.table",
-      //   () => {
-      //     $button_vis_multi_campaign.prop(
-      //       "disabled",
-      //       !$camp_table.bootstrapTable("getSelections").length,
-      //     );
-      //   },
-      // );
-      // $button_vis_multi_campaign.prop("disabled", true);
     })
     .catch((error) => console.log("error", error));
 }
