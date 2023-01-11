@@ -54,35 +54,39 @@ function integerToRoman($integer)
 
 
 <!-- Bootstrap Core CSS -->
-    <link href="../vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="/emergenze/vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
+<!-- Bootstrap Plugins -->
+<link href="/emergenze/vendor/bootstrap-table/dist/bootstrap-table.css" rel="stylesheet">
 
-    <!-- Bootstrap Plugins -->
-    <link href="../vendor/bootstrap-datepicker/dist/css/bootstrap-datepicker.css" rel="stylesheet">
-    <link href="../vendor/bootstrap-table/dist/bootstrap-table.min.css" rel="stylesheet">
-	<link href="../vendor/bootstrap-table/dist/extensions/filter-control/bootstrap-table-filter-control.css" rel="stylesheet">
-    <link href="../vendor/bootstrap-select/dist/css/bootstrap-select.css" rel="stylesheet">
-	
+<link href="/emergenze/vendor/bootstrap-datepicker/dist/css/bootstrap-datepicker.css" rel="stylesheet">
+<link href="/emergenze/vendor/bootstrap-table/dist/bootstrap-table.min.css" rel="stylesheet">
+<link href="/emergenze/vendor/bootstrap-table/dist/extensions/filter-control/bootstrap-table-filter-control.css"
+    rel="stylesheet">
+<link href="/emergenze/vendor/bootstrap-select/dist/css/bootstrap-select.css" rel="stylesheet">
 
-    <!-- Leaflet CSS -->
-    <link href="../vendor/leaflet/leaflet.css" rel="stylesheet">
-     <link rel="stylesheet" href="l_map/css/leaflet-measure.css">
 
-    <!-- MetisMenu CSS -->
-    <link href="../vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+<!-- Leaflet CSS -->
+<link href="/emergenze/vendor/leaflet/leaflet.css" rel="stylesheet">
+<link href=<?php echo "\"$leaflet_measure_path\""; ?> rel="stylesheet">
+<!-- <link href="l_map/css/leaflet-measure.css" rel="stylesheet"> -->
 
-    <!-- Custom CSS -->
-    <link href="../dist/css/sb-admin-2.css" rel="stylesheet">
 
-    <!-- Morris Charts CSS -->
-    <link href="../vendor/morrisjs/morris.css" rel="stylesheet">
-	
-	<!--link href="../vendor/highcharts/code/css/highcharts.css" rel="stylesheet"-->
+<!-- MetisMenu CSS -->
+<link href="/emergenze/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
 
-    <!-- Custom Fonts -->
-    <link href="../vendor/fontawesome-free-5.13.0-web/css/all.css" rel="stylesheet" type="text/css">
-	
-	<link href="../vendor/font-awesome-animation/dist/font-awesome-animation.css" rel="stylesheet" type="text/css">
-    
+<!-- Custom CSS -->
+<link href="/emergenze/dist/css/sb-admin-2.css" rel="stylesheet">
+
+<!-- Morris Charts CSS -->
+<link href="/emergenze/vendor/morrisjs/morris.css" rel="stylesheet">
+
+<!--link href="/emergenze/vendor/highcharts/code/css/highcharts.css" rel="stylesheet"-->
+
+<!-- Custom Fonts -->
+<link href="/emergenze/vendor/fontawesome-free-5.13.0-web/css/all.css" rel="stylesheet" type="text/css">
+
+<link href="/emergenze/vendor/font-awesome-animation/dist/font-awesome-animation.css" rel="stylesheet" type="text/css">
+ 
     <style type="text/css">
     #wrapper { 
     	/*padding-top:50px;*/
@@ -199,20 +203,28 @@ function integerToRoman($integer)
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-    <!-- jQuery -->
-    <script src="../vendor/jquery/jquery.min.js"></script>
-	
-	<!-- GRAFICI d3js -->
-	<script src="https://d3js.org/d3.v4.min.js"></script>
-	
-	<!-- GRAFICI highcart -->
-	<script src="../vendor/highcharts/code/highcharts.js"></script>
-	<script src="../vendor/highcharts/code/modules/stock.js"></script>
-	<script src="../vendor/highcharts/code/modules/data.js"></script>
-	<script src="../vendor/highcharts/code/modules/exporting.js"></script>
-	<script src="../vendor/highcharts/code/modules/export-data.js"></script>
+<!-- jQuery -->
+<script src="/emergenze/vendor/jquery/jquery.min.js"></script>
 
+<!-- Bootstrap js -->
+<script src="/emergenze/vendor/bootstrap/js/bootstrap.min.js"></script>
 
+<!-- Bootstrap table -->
+<script src="/emergenze/vendor/bootstrap-table/dist/bootstrap-table.js"></script>
 
-<?php
-?>
+<!--  load jquery UI  -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"
+    integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<link href="https://code.jquery.com/ui/1.12.1/themes/excite-bike/jquery-ui.css" rel="stylesheet">
+
+<!-- GRAFICI d3js -->
+<script src="https://d3js.org/d3.v4.min.js"></script>
+
+<!-- GRAFICI highcart -->
+<script src="/emergenze/vendor/highcharts/code/highcharts.js"></script>
+<script src="/emergenze/vendor/highcharts/code/modules/stock.js"></script>
+<script src="/emergenze/vendor/highcharts/code/modules/data.js"></script>
+<script src="/emergenze/vendor/highcharts/code/modules/exporting.js"></script>
+<script src="/emergenze/vendor/highcharts/code/modules/export-data.js"></script>
+

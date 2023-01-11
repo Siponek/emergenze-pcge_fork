@@ -34,7 +34,7 @@ if(!$conn) {
 					order by nome;";
 			$result2 = pg_query($conn, $query2);
 			while($r = pg_fetch_assoc($result)) {
-				echo $r2
+				echo $r2;
 			}
 			echo ']';
 			$check=$check+1;
