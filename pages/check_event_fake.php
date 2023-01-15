@@ -5,10 +5,10 @@ $contatore_allerte = 0;
 $check_pausa = 0;
 $descrizione_allerta = "Nessuna allerta";
 $color_allerta = "#5cb85c";
-$profilo_sistema = 0;
 // Weird variables
-$eventi_attivi_c[] = [0];
-$profilo_ok = 0;
+$profilo_sistema = 7;
+$eventi_attivi_c[] = ["LOL"];
+$profilo_ok = 10;
 $segn_limbo = 0;
 $segn_limbo_municipi = 0;
 $count_resp = 0;
