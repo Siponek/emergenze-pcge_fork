@@ -1,19 +1,7 @@
 // import { format_dashboard_date } from "./dashboard_api.js";
-const customParseFormat = require("dayjs/plugin/customParseFormat");
-dayjs.extend(customParseFormat);
-// node .\node_modules\browserify\bin\cmd.js dashboard_js.js -o bundle.js
-function format_dashboard_date(
-  date_to_convert,
-  in_format,
-  out_format,
-) {
-  const date_formatted = dayjs(date_to_convert, in_format).format(
-    out_format,
-  );
-  return date_formatted;
-}
-// Add in dayjs plugin, because writng code is for noobs
 
+// Add in dayjs plugin, because writng code is for noobs
+import { format_date, convert_to_date } from "./dashboard_api.js";
 // Cashe the DOM elements
 const $dashboard_text = $("#dashboard_text");
 const $button_message_list = $("#button_msg_list");
@@ -122,7 +110,7 @@ $button_create_campaign.on("click", async () => {
   form_data.append("message_note", $msg_note);
   form_data.append("group", group_number);
   form_data.append("voice_gender", voice_picked);
-  form_data.append("test_numbers", $test_numbers);
+  form_data.append("test_phone_numbers", $test_numbers);
   await create_campaign(python_api_url, form_data);
   alert(`Campaign: Sent!`);
 });
@@ -375,7 +363,7 @@ async function retr_message_list(root_url) {
       Object.entries(message_list).forEach(([key, value]) => {
         message_list_dict.push({
           message_date: convert_to_date(
-            format_dashboard_date(
+            format_date(
               value.data_creazione,
               "DD-MM-YYYY HH:mm:ss",
               "YYYY/MM/DD HH:mm:ss",

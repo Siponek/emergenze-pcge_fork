@@ -1,6 +1,6 @@
 // This file will export the dashboard api calls for fetching and managinging the dashboard data
 
-export default async function retr_message(root_div, message_id) {
+export async function retr_message(root_div, message_id) {
   const request_options = {
     method: "GET",
     redirect: "follow",
@@ -29,4 +29,37 @@ export default async function retr_message(root_div, message_id) {
   }
   console.log(`element with id ${message_id} was not found`);
   return null;
+}
+
+export function format_date(date) {
+  const date_str = date.split(" ")[0];
+  const time_str = date.split(" ")[1];
+  const date_arr = date_str.split("-");
+  const time_arr = time_str.split(":");
+  const year = date_arr[2];
+  const month = date_arr[1];
+  const day = date_arr[0];
+  const hour = time_arr[0];
+  const minute = time_arr[1];
+  const second = time_arr[2];
+  const date_formated = `${year}/${month}/${day} ${hour}:${minute}:${second}`;
+  const final_format = date_formated;
+  return final_format;
+}
+
+export function convert_to_date(string_date) {
+  const date = new Date(string_date);
+  const final_date =
+    date.getUTCFullYear() +
+    "-" +
+    (date.getUTCMonth() + 1) +
+    "-" +
+    date.getUTCDate() +
+    " " +
+    date.getUTCHours() +
+    ":" +
+    date.getUTCMinutes() +
+    ":" +
+    date.getUTCSeconds();
+  return final_date;
 }
