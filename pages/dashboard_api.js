@@ -32,32 +32,41 @@ export async function retr_message(root_div, message_id) {
 }
 
 export function format_date(date) {
-  const date_str = date.split(" ")[0];
-  const time_str = date.split(" ")[1];
+  const [date_str, time_str] = [
+    date.split(" ")[0],
+    date.split(" ")[1],
+  ];
   const date_arr = date_str.split("-");
   const time_arr = time_str.split(":");
-  const year = date_arr[2];
-  const month = date_arr[1];
-  const day = date_arr[0];
-  const hour = time_arr[0];
-  const minute = time_arr[1];
-  const second = time_arr[2];
+  const [year, month, day, hour, minute, second] = [
+    date_arr[2],
+    date_arr[1],
+    date_arr[0],
+    time_arr[0],
+    time_arr[1],
+    time_arr[2],
+  ];
   return `${year}/${month}/${day} ${hour}:${minute}:${second}`;
 }
 
 export function convert_to_date(string_date) {
   const date = new Date(string_date);
-  const final_date =
-    date.getUTCFullYear() +
-    "-" +
-    (date.getUTCMonth() + 1) +
-    "-" +
-    date.getUTCDate() +
-    " " +
-    date.getUTCHours() +
-    ":" +
-    date.getUTCMinutes() +
-    ":" +
-    date.getUTCSeconds();
-  return final_date;
+  const date_year = date.getFullYear();
+  const date_month =
+    date.getMonth() + 1 <= 9
+      ? "0" + (date.getUTCMonth() + 1)
+      : date.getUTCMonth() + 1;
+  const date_day =
+    date.getDate() <= 9 ? "0" + date.getDate() : date.getDate();
+  const date_hour =
+    date.getHours() <= 9 ? "0" + date.getHours() : date.getHours();
+  const date_minute =
+    date.getMinutes() <= 9
+      ? "0" + date.getMinutes()
+      : date.getMinutes();
+  const date_second =
+    date.getSeconds() <= 9
+      ? "0" + date.getSeconds()
+      : date.getSeconds();
+  return `${date_year}-${date_month}-${date_day} ${date_hour}:${date_minute}:${date_second}`;
 }
