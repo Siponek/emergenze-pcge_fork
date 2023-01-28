@@ -42,9 +42,7 @@ export function format_date(date) {
   const hour = time_arr[0];
   const minute = time_arr[1];
   const second = time_arr[2];
-  const date_formated = `${year}/${month}/${day} ${hour}:${minute}:${second}`;
-  const final_format = date_formated;
-  return final_format;
+  return `${year}/${month}/${day} ${hour}:${minute}:${second}`;
 }
 
 export function convert_to_date(string_date) {
