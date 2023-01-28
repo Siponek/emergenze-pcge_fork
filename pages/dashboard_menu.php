@@ -9,6 +9,7 @@
         <meta name="author" content="szymon">
         <link rel="stylesheet" href="styles/style.php" media="screen">
         <link rel="stylesheet" href="../vendor//leaflet-search/src/leaflet-search.css">
+        <script src="..\node_modules\dayjs\dayjs.min.js"></script>
         <title>Dashboard</title>
         <?php
         function js_console_log($message) {
@@ -234,7 +235,9 @@
         </div>
         <!-- defer blocks execution of script untill document is loaded -->
         <script type="text/javascript" defer src="config.js"></script>
-        <script type="text/javascript" defer src="dashboard_js.js"></script>
+        <script type="text/javascript" defer src="bundle.js"></script>
+        <!-- <script type="module" defer src="dashboard_js.js"></script> -->
+        <!-- <script type="module" src="dashboard_api.js"></script> -->
         <?php
         safe_import(FOOTER_PATH);
         safe_import(REQ_BOTTOM_PATH);

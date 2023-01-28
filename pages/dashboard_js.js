@@ -1,3 +1,19 @@
+// import { format_dashboard_date } from "./dashboard_api.js";
+const customParseFormat = require("dayjs/plugin/customParseFormat");
+dayjs.extend(customParseFormat);
+// node .\node_modules\browserify\bin\cmd.js dashboard_js.js -o bundle.js
+function format_dashboard_date(
+  date_to_convert,
+  in_format,
+  out_format,
+) {
+  const date_formatted = dayjs(date_to_convert, in_format).format(
+    out_format,
+  );
+  return date_formatted;
+}
+// Add in dayjs plugin, because writng code is for noobs
+
 // Cashe the DOM elements
 const $dashboard_text = $("#dashboard_text");
 const $button_message_list = $("#button_msg_list");
@@ -11,7 +27,6 @@ const $header_cmp_list = $("#camp_list_header");
 const $ui_date_start = $("#ui_date_start");
 const $ui_date_end = $("#ui_date_end");
 const $message_table = $("#msg_table");
-const $test_numbers = $("#test_phone_numbers");
 
 //* API URL
 const python_api_url = `${config.BASE_URL}user_campaign/`;
@@ -107,6 +122,7 @@ $button_create_campaign.on("click", async () => {
   form_data.append("message_note", $msg_note);
   form_data.append("group", group_number);
   form_data.append("voice_gender", voice_picked);
+  form_data.append("test_numbers", $test_numbers);
   await create_campaign(python_api_url, form_data);
   alert(`Campaign: Sent!`);
 });
@@ -358,7 +374,13 @@ async function retr_message_list(root_url) {
       const message_list_dict = [];
       Object.entries(message_list).forEach(([key, value]) => {
         message_list_dict.push({
-          message_date: value.data_creazione,
+          message_date: convert_to_date(
+            format_dashboard_date(
+              value.data_creazione,
+              "DD-MM-YYYY HH:mm:ss",
+              "YYYY/MM/DD HH:mm:ss",
+            ),
+          ),
           message_dimension: value.dimensione,
           message_duration: value.durata,
           message_id: value.id_messaggio,
