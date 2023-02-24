@@ -12,18 +12,25 @@
         <link rel="stylesheet" href="./styles/dashboard_menu.css">
         <title>Dashboard</title>
         <?php
+        define('PRODUCTION_DEV', getenv('PRODUCTION_DEV'));
         function js_console_log($message) {
             $current_file = basename(__FILE__);
             echo '<script>console.log(' . "\"{$current_file}: {$message}\"" . ')</script>';
         }
         function safe_import($const_path) {
-            js_console_log('checking: ' . $const_path);
-            file_exists($const_path) ? require($const_path) : js_console_log($const_path . ' does not exist');
+            file_exists($const_path) ? require_once $const_path : js_console_log($const_path . ' does not exist');
         }
         define('REQ_PATH', __DIR__ . '/req.php');
-        // define('CHECK_EVENTO_PATH', __DIR__ . '/check_evento.php');
+        if (PRODUCTION_DEV === TRUE) {
+            js_console_log('PRODUCTION_DEV: ' . PRODUCTION_DEV);
+            define('SPID_AUTH', __DIR__ . '/check_evento.php');
+        }
+        else {
+            js_console_log('PRODUCTION_DEV: ' . PRODUCTION_DEV);
+            define('SPID_AUTH', __DIR__ . '/check_event_fake.php');
+        }
+        js_console_log('SPID_AUTH: ' . SPID_AUTH);
         // define('CONTEGGI_DASHBOARD_PATH', __DIR__ . '/conteggi_dashboard.php');
-        define('FAKE_SPID', __DIR__ . '/check_event_fake.php');
         define('NAVBAR_UP_PATH', __DIR__ . '/navbar_up.php');
         define('NAVBAR_LEFT_PATH', __DIR__ . '/navbar_left.php');
         define('FOOTER_PATH', __DIR__ . '/footer.php');
@@ -31,18 +38,13 @@
         define('CONTATORI_EVENTO_EMBED_PATH', __DIR__ . '/contatori_evento_embed.php');
         define('FORBIDDEN_PATH', __DIR__ . '/divieto_accesso.php');
         try {
-
-            safe_import(REQ_PATH);
-            // Loading check_evento.php using safe_import does not load useful variable defined in it (i.e. $CF or $nome...)
-            // safe_import(CHECK_EVENTO_PATH);
-            // require(CHECK_EVENTO_PATH);
-            safe_import(FAKE_SPID);
-            // safe_import(CONTEGGI_DASHBOARD_PATH);
+            file_exists(REQ_PATH) ? require_once REQ_PATH : js_console_log(REQ_PATH . ' does not exist');
+            file_exists(SPID_AUTH) ? require_once SPID_AUTH : js_console_log(SPID_AUTH . ' does not exist');
+            js_console_log('Finished loading paths');
         } catch (ErrorException $e) {
-            echo 'test_page.php: Eror in head' . $e->getMessage();
+            echo 'test_page.php: Error in head' . $e->getMessage();
         }
         ?>
-
     </head>
 
     <body>
@@ -56,11 +58,11 @@
         <div id="wrapper">
             <div id="navbar1">
                 <?php
-                safe_import(NAVBAR_UP_PATH);
+                file_exists(NAVBAR_UP_PATH) ? require_once NAVBAR_UP_PATH : js_console_log(NAVBAR_UP_PATH . ' does not exist');
                 ?>
             </div>
             <?php
-            safe_import(NAVBAR_LEFT_PATH);
+            file_exists(NAVBAR_LEFT_PATH) ? require_once NAVBAR_LEFT_PATH : js_console_log(NAVBAR_LEFT_PATH . ' does not exist');
             ?>
             <div id="page-wrapper">
                 <!-- //  -->
@@ -264,8 +266,8 @@
         <!-- defer blocks execution of script untill document is loaded -->
         <!-- <script type="text/javascript" src="..\node_modules\dayjs\dayjs.min.js"></script> -->
         <?php
-        safe_import(FOOTER_PATH);
-        safe_import(REQ_BOTTOM_PATH);
+        file_exists(FOOTER_PATH) ? require_once FOOTER_PATH : js_console_log(FOOTER_PATH . ' does not exist');
+        file_exists(REQ_BOTTOM_PATH) ? require_once REQ_BOTTOM_PATH : js_console_log(REQ_BOTTOM_PATH . ' does not exist');
         ?>
         <script type="text/javascript" defer src="config.js"></script>
         <!-- <script type="text/javascript" defer src="dashboard_js.js"></script> -->
