@@ -2,10 +2,11 @@
 //$page = $_SERVER['PHP_SELF'];
 //$sec = "60";
 // Define ->>> constant_name, value, case_insensitive
-const LOCAL_DEV = true;
+!defined('PRODUCTION_DEV') && define('PRODUCTION_DEV', getenv('PRODUCTION_DEV'));
+
 $directory_path = '';
 $html_stylesheet = ' rel="stylesheet">';
-if (LOCAL_DEV) {
+if (PRODUCTION_DEV == true) {
 	$directory_path = '../';
 }
 echo "<!-- directory_path is: " . $directory_path . " -->";
