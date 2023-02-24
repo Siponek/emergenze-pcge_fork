@@ -6,13 +6,13 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="Cache-control" content="public">
-        <meta name="author" content="szymon">
+        <meta name="author" content="Szymon Z">
         <link rel="stylesheet" href="styles/style.php" media="screen">
         <link rel="stylesheet" href="../vendor//leaflet-search/src/leaflet-search.css">
         <link rel="stylesheet" href="./styles/dashboard_menu.css">
         <title>Dashboard</title>
         <?php
-        define('PRODUCTION_DEV', getenv('PRODUCTION_DEV'));
+        // !defined('PRODUCTION_DEV') && define('PRODUCTION_DEV', getenv('PRODUCTION_DEV'));
         function js_console_log($message) {
             $current_file = basename(__FILE__);
             echo '<script>console.log(' . "\"{$current_file}: {$message}\"" . ')</script>';
